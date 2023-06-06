@@ -1,9 +1,13 @@
 const cityForm = document.querySelector("form");
-const card = document.querySelector(".card");
 const details = document.querySelector(".details");
-const time = document.querySelector("img.time");
 const icon = document.querySelector(".icon.img");
+const time = document.querySelector("img.time");
+const card = document.querySelector(".card");
 
+// create a new forecast object
+const forecast = new Forecast();
+
+// update UI within the DOM
 const updateUI = ({ cityDetails, forecast }) => {
   // update details template
   details.innerHTML = `
@@ -15,25 +19,14 @@ const updateUI = ({ cityDetails, forecast }) => {
     </div>
   `;
 
-  // update day/night and icon images
+  // update day/night background
   let timeSrc = forecast.IsDayTime ? "img/day.png" : "img/night.png";
-
   time.setAttribute("src", timeSrc);
 
   // remove d-none class if present
   if (card.classList.contains("d-none")) {
     card.classList.remove("d-none");
   }
-};
-
-const updateCity = async (city) => {
-  const cityDetails = await getCity(city);
-  const forecast = await getForecast(cityDetails.Key);
-
-  return {
-    cityDetails,
-    forecast,
-  };
 };
 
 cityForm.addEventListener("submit", (e) => {
@@ -45,7 +38,8 @@ cityForm.addEventListener("submit", (e) => {
   cityForm.reset();
 
   // update the UI with new city
-  updateCity(city)
+  forecast
+    .updateCity(city)
     .then((data) => {
       updateUI(data);
     })

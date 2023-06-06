@@ -1,11 +1,23 @@
 const cityForm = document.querySelector("form");
 const details = document.querySelector(".details");
-const icon = document.querySelector(".icon.img");
-const time = document.querySelector("img.time");
 const card = document.querySelector(".card");
 
 // create a new forecast object
 const forecast = new Forecast();
+const icon = new Icon();
+
+// get city from localStorage
+let prevCity = localStorage.getItem("city");
+if (prevCity) {
+  forecast
+    .updateForecast(prevCity)
+    .then((data) => {
+      updateUI(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 // update UI within the DOM
 const updateUI = ({ cityDetails, forecast }) => {
@@ -18,10 +30,11 @@ const updateUI = ({ cityDetails, forecast }) => {
       <span>&deg;C</span>
     </div>
   `;
+  // draw weather icon
+  icon.drawIcon(forecast.WeatherIcon);
 
-  // update day/night background
-  let timeSrc = forecast.IsDayTime ? "img/day.png" : "img/night.png";
-  time.setAttribute("src", timeSrc);
+  // safe information to localStorage
+  localStorage.setItem("city", cityDetails.EnglishName);
 
   // remove d-none class if present
   if (card.classList.contains("d-none")) {
@@ -39,7 +52,7 @@ cityForm.addEventListener("submit", (e) => {
 
   // update the UI with new city
   forecast
-    .updateCity(city)
+    .updateForecast(city)
     .then((data) => {
       updateUI(data);
     })

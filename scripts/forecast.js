@@ -7,7 +7,8 @@ class Forecast {
       "http://dataservice.accuweather.com/currentconditions/v1/";
   }
 
-  async updateCity(city) {
+  // getting forecast info based on input value
+  async updateForecast(city) {
     const cityDetails = await this.getCity(city);
     const forecast = await this.getForecast(cityDetails.Key);
 
@@ -17,6 +18,7 @@ class Forecast {
     };
   }
 
+  // getting city's info based on city name
   async getCity(city) {
     const query = `?apikey=${this.KEY}&q=${city}`;
 
@@ -26,6 +28,7 @@ class Forecast {
     return data[0];
   }
 
+  // getting forecast's info based on city id
   async getForecast(id) {
     const query = `${id}?apikey=${this.KEY}`;
 

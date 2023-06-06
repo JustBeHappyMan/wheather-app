@@ -12,14 +12,15 @@
 
     <h1 class="text-muted text-center my-4">Wheather Forecast</h1>
     <form action="" class="change-location my-4 text-center text-muted">
-      <label for="city">Enter a location for wheather information</label>
+      <label for="city" class="mb-2">Enter a location for wheather information:</label>
       <input type="text" name="city" class="form-control p-4">
     </form>
 
-    <div class="card shadow-lg rounded d-none">
-      <img src="https://via.placeholder.com/400x300" alt="Wheather visual information" class="time card-img-top">
-      <div class="icon bg-light mx-auto text-center">
-        <!-- icon -->
+    <div class="card shadow-lg rounded">
+      <!-- <img src="https://via.placeholder.com/400x300" alt="Wheather visual information" class="time card-img-top"> -->
+      <canvas id="icon" ></canvas>
+      <div class="d-none">
+        <img id="source" src="/img/icons.png" />
       </div>
 
       <div class="text-muted text-uppercase text-center details">
@@ -34,6 +35,7 @@
   </div>
   
   <script src="./scripts/forecast.js"></script>
+  <script src="./scripts/icon.js"></script>
   <script src="./scripts/app.js"></script>
 </body>
 </html>
